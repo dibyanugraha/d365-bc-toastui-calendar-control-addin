@@ -1,0 +1,33 @@
+{
+  "id": "73343d99-da2a-49d6-a899-0cff0d064d61",
+  "name": "Dynamics 365 Business Central ToastUI Control Add-in",
+  "publisher": "Ariestya Dibyanugraha",
+  "version": "1.0.0.0",
+  "brief": "A simple yet fully working Dynamics 365 Business Central control add-in demonstrating capabilities of ToastUI Calendar",
+  "description": "A simple yet fully working Dynamics 365 Business Central control add-in demonstrating capabilities of ToastUI Calendar",
+  "privacyStatement": "",
+  "EULA": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html",
+  "help": "https://github.com/dibyanugraha/d365-bc-toastui-calendar-control-addin.git",
+  "url": "https://github.com/dibyanugraha/d365-bc-toastui-calendar-control-addin.git",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "24.0.0.0",
+  "application": "24.0.0.0",
+  "idRanges": [
+    {
+      "from": 50000,
+      "to": 99999
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": false,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false,
+    "applyToDevExtension": false
+  },
+  "runtime": "13.0",
+  "features": [
+    "NoImplicitWith"
+  ],
+  "keyVaultUrls":[]
+}

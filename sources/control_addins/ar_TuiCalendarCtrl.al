@@ -10,7 +10,8 @@ controladdin ar_TuiCalendarCtrl
         , 'scripts/refresh.js';
 
     StyleSheets =
-        'stylesheets/tui-time-picker.min.css'
+        'stylesheets/styles.css'
+        , 'stylesheets/tui-time-picker.min.css'
         , 'stylesheets/tui-date-picker.min.css'
         , 'stylesheets/toastui-calendar.min.css'
         , 'https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css'

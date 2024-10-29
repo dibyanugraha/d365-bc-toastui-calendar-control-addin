@@ -2,3 +2,8 @@
     position: absolute;
     padding: 0.5rem;
   }
+  
+#tooltip-message {
+    position: absolute;
+    padding: 0.5rem;
+  }

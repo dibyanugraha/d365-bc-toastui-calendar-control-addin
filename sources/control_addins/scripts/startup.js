@@ -28,7 +28,7 @@ controlAddIn.innerHTML = "<nav class='navbar'> \
   <span id='calendarDateRange' class='subtitle is-3'></span> \
 </nav> \
 <div id='calendarFrame' style='height: 650px;'></div> \
-<div class='notification is-success is-light' id='tooltip' hidden><button class='delete'></button></div>"
+<div id='tooltip-message' hidden><article class='message is-info is-small'><div id='tooltip-header' class='message-header'></div><div id='tooltip-body' class='message-body'></div></article></div>"
 
 calendar = new tuiCalendar('#calendarFrame', options);
 let dateStart = new Date(calendar.getDateRangeStart());
@@ -90,25 +90,30 @@ calendar.on('beforeCreateEvent', (eventObj) => {
   ]);
 });
 
-const tooltip = document.querySelector('#tooltip');
-console.log("tooltip", tooltip);
+const tooltip = document.querySelector('#tooltip-message');
+const tooltip_header = document.querySelector('#tooltip-header');
+const tooltip_body = document.querySelector('#tooltip-body');
+
 // This event listener should be debounced or it may affect the performance.
 document.addEventListener('mouseover', (e) => {
   const el = e.target;
-  console.log("mouseover", e);
 
   // You need to choose a different selector for schedules in the other view.
-  const scheduleAllDay = el.closest('.toastui-calendar-weekday-event');
-  console.log("mouseover", scheduleAllDay);
+  const eventAllDay = el.closest('.toastui-calendar-weekday-event');
 
-  if (scheduleAllDay) {
-    console.log("mouseover", scheduleAllDay);
-    scheduleAllDay.addEventListener(
+  if (eventAllDay) {
+    let eventTitleSpan = '';
+    let calData = {};
+    const selectors = eventAllDay.querySelectorAll('span');
+    eventTitleSpan = [...selectors].map(span => span.innerText);//.replace(/"/g,""));
+    calData = calendarData.find((el) => el.title === eventTitleSpan[2]);
+    tooltip_header.innerHTML = calData.title;
+    tooltip_body.innerHTML = new Date(calData.start).toLocaleString() + "<br>" + new Date(calData.end).toLocaleString();
+    
+    eventAllDay.addEventListener(
       'mouseleave',
       () => {
         tooltip.hidden = true;
-        tooltip.innerHTML = scheduleAllDay.innerHTML;
-        console.log("mouseleave", tooltip);
       },
       { once: true }
     );
@@ -116,15 +121,11 @@ document.addEventListener('mouseover', (e) => {
     const {
       x,
       width,
-      bottom: scheduleBottom,
-      y,
-
-    } = scheduleAllDay.getBoundingClientRect();
+      bottom
+    } = eventAllDay.getBoundingClientRect();
     tooltip.hidden = false;
-    tooltip.innerHTML = scheduleAllDay.innerHTML;
-    console.log("mouseover", tooltip);
     Object.assign(tooltip.style, {
-      top: `${scheduleBottom}px`,
+      top: `${bottom}px`,
       left: `${x + Math.round(width / 2)}px`,
     });
   }
@@ -132,11 +133,18 @@ document.addEventListener('mouseover', (e) => {
   const calEvent = el.closest('.toastui-calendar-event-time');
 
   if (calEvent) {
+    let eventTitleSpan = '';
+    let calData = {};
+    const selectors = calEvent.querySelectorAll('span');
+    eventTitleSpan = [...selectors].map(span => span.innerText);//.replace(/"/g,""));
+    calData = calendarData.find((el) => el.title === eventTitleSpan[1]);
+    tooltip_header.innerHTML = calData.title;
+    tooltip_body.innerHTML = new Date(calData.start).toLocaleString() + "<br>" + new Date(calData.end).toLocaleString();
+
     calEvent.addEventListener(
       'mouseleave',
       () => {
         tooltip.hidden = true;
-        tooltip.innerHTML = calEvent.innerHTML;
       },
       { once: true }
     );
@@ -148,7 +156,6 @@ document.addEventListener('mouseover', (e) => {
       height 
     } = calEvent.getBoundingClientRect();
     tooltip.hidden = false;
-    tooltip.innerHTML = calEvent.innerHTML;
     Object.assign(tooltip.style, {
       top: `${y + height/2}px`,
       left: `${x + Math.round(width / 2)}px`,
